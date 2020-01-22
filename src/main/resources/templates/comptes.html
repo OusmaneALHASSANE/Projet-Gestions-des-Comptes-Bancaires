@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{template.html}">
+<head>
+<meta charset="utf-8">
+<title>GESTION DES COMPTES BANCAIRES</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+</head>
+<body>
+<div layout:fragment="content">
+
+<div class="row">
+  <div class="col-md-6">
+ <div class="card">
+ <div class="card-header bg-primary">Consultation d'un Compte</div>
+ 
+<div class="card-body">
+<form th:action="@{/consulterCompte}" method="get">
+<div>
+<label>Code Compte</label>
+<input type="text" name="codeCompte" th:value="${codeCompte}">
+<button type="submit" class="btn btn-primary">OK</button>
+</div>
+</form>
+<div class="text-danger" th:if="${exeption}" th:text="${exeption.message}"></div>
+</div> 
+</div>
+</div>
+
+<div class="col-md-6" sec:authorize="hasAuthority('ADMIN')">
+<div class="card" th:if="${compte}">
+ <div class="card-header bg-primary">Opérations sur le Compte</div>
+ <div class="card-body">
+   <label>Compte:</label>
+   <label th:text="${compte.code}"></label>
+ <form th:action="@{/Saveoperation}">
+ <input type="hidden"  name="cp" th:value="${compte.code}">
+ <div>
+   <input type="radio" name="op" value="versement" checked="checked" onchange="document.getElementById('forVirement').style.display='none'">Versement
+  <input type="radio" name="op" value="retrait" onchange="document.getElementById('forVirement').style.display='none'">Retrait
+  <input type="radio" name="op" value="virement" onchange="document.getElementById('forVirement').style.display='block'">Virement 
+ </div>
+
+  <div id="forVirement" style="display:none">
+   <label>Vers:</label>
+  <input type="text" name="vers">
+  </div>
+ 
+  <div>
+    <label>Montant:</label>
+    <input type="text" name="montant">
+    <div class="text-danger"  th:text="${#httpServletRequest.getParameter('erreurs')}" ></div>
+  </div>
+
+  <button  class="btn btn-primary" type="submit" value="Submit">Save</button>
+  
+</form>
+ </div> 
+ </div>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+
+ <div class="card" th:if="${compte}">
+ <div class="card-header bg-primary">Information sur le Compte</div>
+ <div class="card-body">
+ <div> 
+ <label>Nom:</label>
+ <label th:text="${compte.client.nom}"></label>
+ </div>
+ <div>
+ <label>Code:</label>
+ <label th:text=${compte.code}></label>
+ </div>
+ <div>
+ <label>Solde:</label>
+ <label th:text=${compte.solde}></label>
+ </div>
+ <div>
+ <label>Date Création:</label>
+ <label th:text=${compte.dateCreation}></label>
+ </div>
+ <div>
+ <label>Type:</label>
+ <label th:text=${compte.class.simpleName}></label><br>
+ </div>
+ 
+ <div th:if="${compte.class.simpleName=='CompteCourant'}">
+ <label>Découvert:</label>
+ <label th:text="${compte.decouvert}"></label>
+ </div>
+ <div th:if="${compte.class.simpleName=='CompteEpargne'}">
+ <label>Taux:</label>
+ <label th:text="${compte.taux}"></label>
+ </div>
+ </div>
+ </div>
+ </div>
+  <div class="col-md-6">
+
+ <div class="card" th:if="${compte}">
+ <div class="card-header bg-primary">Liste des Opérations</div>
+ <div class="card-body">
+ <table class="table table-striped">
+ <tr>
+ <th>Num</th> <th>Type</th> <th>Date</th> <th>Montant</th>
+ </tr>
+ <tr th:each="o:${listOperations}">
+  <td th:text="${o.numero}"></td> 
+  <td th:text="${o.class.simpleName}"></td> 
+  <td th:text="${o.dateOperation}"></td> 
+  <td th:text="${o.montant}"></td> 
+ </tr>
+ </table>
+ 
+<nav aria-label="...">
+ <ul class="pagination pagination-lg">
+<li   th:class="${pageCourante}==${status.index}?'active':''" th:each="pa,status:${pages}">
+<a th:href="@{consultercompte(page=${status.index},size=${size},codeCompte=${compte.code})}" th:text="${status.index}"></a>
+</li>
+</ul>
+</nav>
+ </div> 
+ </div>
+</div>
+</div>
+ </div>
+</body>
+</html>

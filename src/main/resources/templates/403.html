@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{template.html}">
+<head>
+<meta charset="utf-8">
+<title>GESTION DES COMPTES BANCAIRES</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}">
+
+
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+th:href="@{/css/style.css}" />
+</head>
+<body>
+<div layout:fragment="content">
+<div class="col-md-6 md-offset_3">
+<div class="card">
+<div class="card-header bg-primary">Probleme d'autorisation</div>
+<div class="card-body">
+
+<div class="text-danger">
+Vous n'avez pas le droit d'accéder à cette ressource!!
+</div>
+</div>
+</div>
+</div>
+ </div>
+</body>
+</html>

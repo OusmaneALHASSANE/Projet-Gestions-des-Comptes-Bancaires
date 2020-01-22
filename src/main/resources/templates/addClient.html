@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{template.html}">
+<head>
+<meta charset="utf-8">
+<title>GESTION DES COMPTES BANCAIRES</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css"
+th:href="@{/css/myStyle.css}" />
+</head>
+<body>
+
+<div class="col-md-8 offset-md-2 spacer" layout:fragment="content">
+
+<div class="card card-primary">
+ <div class="card-header">ADD CUSTOMER</div>
+ <div class="card-body">
+<form th:action="@{/saveClient}" method="post" >
+<div class="form-group">
+<label class="control-label">Nom:</label>
+<input class="form-control" type="text" name="nom"
+th:value="${client.nom}"/>
+<span class="red" th:errors="${client.nom}"></span>
+</div>
+<div class="form-group">
+<label class="control-label">Email</label>
+<input class="form-control" type="text" name="email"
+th:value="${client.email}"/>
+<span  class="red" th:errors="${client.email}"></span>
+</div>
+<div>
+<div class="card">
+<label class="control-label">Type de Compte</label>
+<div class="radio">
+ &nbsp &nbsp <label><input type="radio" name="c" value="ce" checked> Compte Epargne</label>
+</div>
+<div class="radio">
+ &nbsp &nbsp <label><input type="radio" name="c" value="cc"> Compte Courant</label>
+</div>
+</div>
+<br>
+<br>
+<button  type="submit" class="btn btn-primary">Save</button></div>
+</form>  
+</div>
+</div>
+</div>
+</body>
+</html>

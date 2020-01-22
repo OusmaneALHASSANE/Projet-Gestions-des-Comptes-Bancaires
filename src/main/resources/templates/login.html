@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<title>AUTHENTIFICATION</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css" th:href="@{css/myStyle.css}">
+
+</head>
+<body>
+<p></p>
+<div class="col-md-6 offset-md-3 spacer">
+<div class="card">
+<div class="card-header bg-primary text-center">Authentification</div>
+<div class="card-body">
+
+<div th:if="${param.error}" class="text-danger">
+Incorrect username or password
+</div>
+<form th:action="@{/login}" method="post">
+<div>
+<label>Username</label>
+<input type="text" class="form-control" name="username"  placeholder="User name">
+</div>
+<div>
+<br>
+<label>Password</label>
+<input type="password" class="form-control" name="password"  placeholder="password">
+</div>
+<div>
+<p></p>
+<button class="btn btn-primary" type="submit">Login</button>
+</div>
+</form>
+
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

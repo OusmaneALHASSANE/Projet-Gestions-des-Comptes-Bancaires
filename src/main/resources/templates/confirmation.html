@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{template.html}">
+<head>
+<meta charset="utf-8">
+<title>GESTION DES COMPTES BANCAIRES</title>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+th:href="@{/css/style.css}" />
+</head>
+<body>
+<div layout:fragment="content">
+<div class="row">
+  <div class="col-md-6">
+
+ <div class="card" th:if="${cp}">
+ <div class="card-header bg-primary">Information sur le Compte</div>
+ <div class="card-body">
+ <div>
+ 
+ <h6>Votre operation de <label th:text="${operation}"></label> s'est passé avec success!!</h6>
+<h6>Votre nouveau solde est de <label th:text="${cp.solde}"></label> DH </h6>
+ </div>
+ <div> 
+ <label>Nom:</label>
+ <label th:text="${cp.client.nom}"></label>
+ </div>
+ <div>
+ <label>Code:</label>
+ <label th:text=${cp.code}></label>
+ </div>
+ <div>
+ <label>Solde:</label>
+ <label th:text=${cp.solde}></label>
+ </div>
+ <div>
+ <label>Date Création:</label>
+ <label th:text=${cp.dateCreation}></label>
+ </div>
+ <div>
+ <label>Type:</label>
+ <label th:text=${cp.class.simpleName}></label><br>
+ </div>
+ 
+ <div th:if="${cp.class.simpleName=='CompteCourant'}">
+ <label>Découvert:</label>
+ <label th:text="${cp.decouvert}"></label>
+ </div>
+ <div th:if="${cp.class.simpleName=='CompteEpargne'}">
+ <label>Taux:</label>
+ <label th:text="${cp.taux}"></label>
+ </div>
+ </div>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

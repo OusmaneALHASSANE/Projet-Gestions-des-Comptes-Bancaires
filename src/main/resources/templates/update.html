@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{template.html}">
+<head>
+<meta charset="utf-8"/>
+<!-- Ici c'est nécessaire d'ajouter le lien th:href.. pour que eclipse puisse connaitre le chemin du fichier -->
+ <!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" -->
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}">
+
+<title>CLIENTS</title>
+</head>
+<body>
+<p></p>
+
+
+<div layout:fragment="content">
+<div class="row">
+<div class="col-md-6" >
+ <div class="card">
+ <div class="card-header bg-primary">MODIFIER CLIENT</div>
+ 
+<div class="card-body">
+<form th:action="@{/update}" method="get">
+<div>
+<label>Nom Client</label>
+<input type="text" name="codeCpte" th:value="${codeCpte}">
+<button type="submit" class="btn btn-primary">CHERCHER</button>
+</div>
+</form>
+<div class="text-danger" th:if="${exeption}" th:text="${exeption.message}"></div>
+</div> 
+</div>
+<br><br><br>
+
+ <div class="card" th:if="${client}">
+ <div class="card-header bg-primary">Information sur le Client</div>
+ <div class="card-body">
+ <form th:action="@{Saveupdate}" method="post" >
+ <div> 
+ <label>Code:</label>
+ <label th:text="${client.code}"></label>
+ </div>
+ <div class="form-group">
+<label class="control-label">Nom</label>
+<input class="form-control" type="text" name="nom"
+th:value="${client.nom}"/>
+<span class="red" th:errors="${client.nom}"></span>
+</div>
+
+
+<input class="form-control" type="hidden" name="code" th:value="${client.code}">
+
+ <div class="form-group">
+<label class="control-label">Email</label>
+<input class="form-control" type="text" name="email"
+th:value="${client.email}"/>
+<span class="red" th:errors="${client.email}"></span>
+</div>
+<div>
+<button  type="submit" class="btn btn-primary">Save</button></div>
+</form>
+ </div>
+ 
+ </div>
+</div>
+
+<div class="col-md-6">
+<div class="card">
+<div class="card-header bg-primary"><h3>CLIENT LIST</h3></div>
+<div class="card-body">
+<table class="table table-striped">
+<thead>
+ <tr>
+ <th>ID</th><th>NOM</th><th>EMAIL</th>
+ </tr>
+</thead>
+<tbody>
+<tr th:each="p:${listClients}">
+
+<td th:text="${p.code}"></td>
+
+<td th:text="${p.nom}">
+
+<td th:text="${p.email}"></td>
+
+<td>
+<a th:href="@{delete(code=${p.code},page=${pageCourante},size=${size},codeCpte=${codeCpte})}">Delete </a>
+</td>
+
+<td><a th:href="@{modifier(code=${p.code})}">Update</a></td>
+</tr>
+</tbody>
+</table>
+<div class="container">
+<ul class="nav nav-pills">
+<li   th:class="${pageCourante}==${status.index}?'active':''" th:each="pa,status:${pages}">
+<a th:href="@{update(page=${status.index},size=${size},codeCpte=${codeCpte})}" th:text="${status.index}"></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
